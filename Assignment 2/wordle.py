@@ -125,13 +125,41 @@ def prepare_game():
         valid_words = [word.rstrip() for word in valid_nonsecret_words.readlines()]
 
     # Modify this if statement! This is just starter code.
+    print(sys.argv)
     if len(sys.argv) == 1:
+        #default game is initialized
+        print("hi")
+        secret_word = "train"
+    elif isinstance(sys.argv[1], str):
+        # here we could check if the string will convert to an int or stay a string using an if-else statement
         secret_word = "salet"
+        if isinstance(sys.argv[1], int):
+        # this should probably be inside of the other elif
+            secret_word = "shops"
     else:
         secret_word = "crane"
 
     # You do not have to change this return statement
     return secret_word, valid_words
+
+def convert_or_keep(input_string):
+    """
+    Checks and converts if input is valid candidate to be turned into an int
+
+    Parameters
+    ----------
+    input_string : str 
+        The string to be checked
+
+    Return
+    ------
+    int or str
+        The converted integer or original string
+    """
+    try:
+        return int(input_string)
+    except ValueError:
+        return input_string
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
