@@ -101,7 +101,7 @@ def color_word(colors, word):
 
     return "".join(colored_word)
 
-# TODO: resolve 2 comments
+
 def prepare_game():
     """
     Prepares the game by reading in the valid words and secret words and
@@ -123,28 +123,26 @@ def prepare_game():
     with open("valid_guesses.txt", "r", encoding="ascii") as valid_nonsecret_words:
         valid_words = [word.rstrip() for word in valid_nonsecret_words.readlines()]
 
+    with open("secret_words.txt", "r", encoding="ascii") as secret_words_file:
+        secret_words = [word.rstrip() for word in secret_words_file.readlines()]
+
     if len(sys.argv) > 2:
         raise ValueError(INVALID_INPUT)
 
     if len(sys.argv) == 1:
         # Default game is initialized
-        print("hi")
-        secret_word = "train"
-        # #TODO: i should edit this to be a random word
+        secret_word = random.choice(secret_words)
     else:
-        # isinstance(sys.argv[1], str):
         # Cheking to see if the first argument is a str ot int
         arg = convert_or_keep(sys.argv[1])
 
         if isinstance(arg, str) and len(arg) == 5 and arg.islower() and arg.isalpha():
             # Setting secret_word to user input if valid string
-            # TODO: I should also add the word that the user inputs
+            valid_words.append(arg)
             secret_word = arg
         elif isinstance(arg, int):
             # Using int as seed for random
             random.seed(arg)
-            with open("secret_words.txt", "r", encoding="ascii") as secret_words_file:
-                secret_words = [word.rstrip() for word in secret_words_file.readlines()]
             secret_word = random.choice(secret_words)
 
         else:
@@ -187,7 +185,6 @@ def is_valid_guess(guess, valid_guesses):
     return guess in valid_guesses
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def get_feedback(secret_word, guessed_word):
     """
     Processes the guess and generates the colored feedback based on the secret
