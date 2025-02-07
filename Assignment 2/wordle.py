@@ -120,24 +120,38 @@ def prepare_game():
           valid_words: A list of valid guess words from valid_guesses.txt.
     """
 
+    ##### DON'T TOUCH THIS PART ####
     # Specify "ascii" as its representation (encoding) since its required by pylint.
     with open("valid_guesses.txt", "r", encoding="ascii") as valid_nonsecret_words:
         valid_words = [word.rstrip() for word in valid_nonsecret_words.readlines()]
 
-    # Modify this if statement! This is just starter code.
-    print(sys.argv)
+    if len(sys.argv) > 2:
+        raise ValueError(INVALID_INPUT)
+
     if len(sys.argv) == 1:
-        #default game is initialized
+        # Default game is initialized
         print("hi")
         secret_word = "train"
-    elif isinstance(sys.argv[1], str):
-        # here we could check if the string will convert to an int or stay a string using an if-else statement
-        secret_word = "salet"
-        if isinstance(sys.argv[1], int):
-        # this should probably be inside of the other elif
-            secret_word = "shops"
     else:
-        secret_word = "crane"
+        # isinstance(sys.argv[1], str):
+        # Cheking to see if the first argument is a str ot int
+        arg = convert_or_keep(sys.argv[1])
+
+        if isinstance(arg, str) and len(arg) == 5 and arg.islower() and arg.isalpha():
+            # Setting secret_word to user input if valid string
+            secret_word = arg
+        elif isinstance(arg, int):
+            # Using int as seed for random
+            random.seed(arg)
+            with open("secret_words.txt", "r", encoding="ascii") as secret_words_file:
+                secret_words = [word.rstrip() for word in secret_words_file.readlines()]
+            secret_word = random.choice(secret_words)
+            # secret_word = "salet"
+        # if isinstance(sys.argv[1], int):
+        # this should probably be inside of the other elif
+            # secret_word = "shops"
+        else:
+            raise ValueError(INVALID_INPUT)
 
     # You do not have to change this return statement
     return secret_word, valid_words
