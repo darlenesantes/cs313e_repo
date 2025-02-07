@@ -102,7 +102,6 @@ def color_word(colors, word):
     return "".join(colored_word)
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def prepare_game():
     """
     Prepares the game by reading in the valid words and secret words and
@@ -120,7 +119,6 @@ def prepare_game():
           valid_words: A list of valid guess words from valid_guesses.txt.
     """
 
-    ##### DON'T TOUCH THIS PART ####
     # Specify "ascii" as its representation (encoding) since its required by pylint.
     with open("valid_guesses.txt", "r", encoding="ascii") as valid_nonsecret_words:
         valid_words = [word.rstrip() for word in valid_nonsecret_words.readlines()]
@@ -146,10 +144,7 @@ def prepare_game():
             with open("secret_words.txt", "r", encoding="ascii") as secret_words_file:
                 secret_words = [word.rstrip() for word in secret_words_file.readlines()]
             secret_word = random.choice(secret_words)
-            # secret_word = "salet"
-        # if isinstance(sys.argv[1], int):
-        # this should probably be inside of the other elif
-            # secret_word = "shops"
+
         else:
             raise ValueError(INVALID_INPUT)
 
@@ -176,7 +171,6 @@ def convert_or_keep(input_string):
         return input_string
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def is_valid_guess(guess, valid_guesses):
     """
     Checks if a given guess is valid.
@@ -188,7 +182,7 @@ def is_valid_guess(guess, valid_guesses):
     """
 
     # Modify this return statement!
-    return True
+    return guess in valid_guesses
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
