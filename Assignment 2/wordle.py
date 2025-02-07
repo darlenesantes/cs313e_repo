@@ -101,7 +101,7 @@ def color_word(colors, word):
 
     return "".join(colored_word)
 
-
+# TODO: resolve 2 comments
 def prepare_game():
     """
     Prepares the game by reading in the valid words and secret words and
@@ -130,6 +130,7 @@ def prepare_game():
         # Default game is initialized
         print("hi")
         secret_word = "train"
+        # #TODO: i should edit this to be a random word
     else:
         # isinstance(sys.argv[1], str):
         # Cheking to see if the first argument is a str ot int
@@ -137,6 +138,7 @@ def prepare_game():
 
         if isinstance(arg, str) and len(arg) == 5 and arg.islower() and arg.isalpha():
             # Setting secret_word to user input if valid string
+            # TODO: I should also add the word that the user inputs
             secret_word = arg
         elif isinstance(arg, int):
             # Using int as seed for random
@@ -205,12 +207,54 @@ def get_feedback(secret_word, guessed_word):
     """
     feedback = [None] * NUM_LETTERS
 
+    # Keeping track of checked letters with freqency dict
+    letter_freqency = create_letter_dict(secret_word)
+
     # Modify this! This is just starter code.
+    # This loop will check the correct color letters
     for i in range(NUM_LETTERS):
-        feedback[i] = WRONG_SPOT_COLOR
+        if guessed_word[i] == secret_word[i]:
+            feedback[i] = CORRECT_COLOR
+            letter_freqency[secret_word[i]] -= 1
+
+    # This loop will check the incorrect letters or misplaced letters
+    for i in range(NUM_LETTERS):
+        # Here I need to check if the letter has already been checked
+        if feedback[i] is None:
+            letter = guessed_word[i]
+            if letter in secret_word and letter_freqency[letter] > 0:
+                feedback[i] = WRONG_SPOT_COLOR
+                letter_freqency[letter] -= 1
+            else:
+                feedback[i] = NOT_IN_WORD_COLOR
 
     # You do not have to change this return statement
     return color_word(feedback, guessed_word)
+
+def create_letter_dict(word):
+    """
+    Creates a dictionary of letter frequency
+
+    Parameters
+    ----------
+    word : str
+        The word we are creating the letter frequency of
+
+    Returns
+    -------
+    letters : dict
+        The dictionary containing letter counts
+    """
+
+    letters = {}
+
+    for char in word:
+        if char not in letters:
+            letters[char] = 1
+        else:
+            letters[char] += 1
+
+    return letters
 
 
 # DO NOT modify this function.
