@@ -48,7 +48,7 @@ def length_of_longest_substring_n3(s):
                     no_repeats = False
 
             # Reassigning max length if it is valid
-            if no_repeats and (j - i + 1) > max_length:
+            if no_repeats and (j - i) > max_length:
                 max_length = j - i
 
     return max_length
@@ -72,8 +72,11 @@ def length_of_longest_substring_n2(s):
     # Using the same logic as the N^3 solution minus one loop
     max_length = 0
     for i in range(s_length):
+        # Creating ascii frequency list
         frequency = [0] * 256
         no_repeats = True
+
+        # Looping though each possible substring
         for j in range(i + 1, s_length + 1):
             ascii_char = ord(s[j - 1])
             frequency[ascii_char] += 1
@@ -100,4 +103,22 @@ def length_of_longest_substring_n(s):
     post: Returns an integer >= 0 representing the length of the longest substring
           in s that contains no repeating characters.
     """
-    pass
+    # Using the same logic as N^2 but with breaks!!
+    s_length = len(s)
+    if s_length == 0:
+        return 0
+
+    max_length = 0
+    for i in range(s_length):
+        frequency = [0] * 256
+        for j in range(i, s_length):
+            # converting into ascii
+            ascii_char = ord(s[j])
+            frequency[ascii_char] += 1
+            # Checking if there is a duplicate and breaking if there is
+            if frequency[ascii_char] > 1:
+                break
+
+            max_length = max(max_length, j - i + 1)
+
+    return max_length
