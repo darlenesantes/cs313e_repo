@@ -89,7 +89,6 @@ def length_of_longest_substring_n2(s):
 
     return max_length
 
-# TODO: implement this function. You may delete this comment when you are done.
 def length_of_longest_substring_n(s):
     """
     Finds the length of the longest substring without repeating characters
