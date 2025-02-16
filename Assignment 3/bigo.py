@@ -54,7 +54,6 @@ def length_of_longest_substring_n3(s):
     return max_length
 
 
-# TODO: implement this function. You may delete this comment when you are done.
 def length_of_longest_substring_n2(s):
     """
     Finds the length of the longest substring without repeating characters
@@ -66,8 +65,26 @@ def length_of_longest_substring_n2(s):
     post: Returns an integer >= 0 representing the length of the longest substring
           in s that contains no repeating characters.
     """
-    pass
+    s_length = len(s)
+    if s_length == 0:
+        return 0
 
+    # Using the same logic as the N^3 solution minus one loop
+    max_length = 0
+    for i in range(s_length):
+        frequency = [0] * 256
+        no_repeats = True
+        for j in range(i + 1, s_length + 1):
+            ascii_char = ord(s[j - 1])
+            frequency[ascii_char] += 1
+            # Checking if there is a duplicate
+            if frequency[ascii_char] > 1:
+                no_repeats = False
+
+            if no_repeats and (j - i) > max_length:
+                max_length = j - i
+
+    return max_length
 
 # TODO: implement this function. You may delete this comment when you are done.
 def length_of_longest_substring_n(s):
