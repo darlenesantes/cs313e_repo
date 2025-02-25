@@ -28,7 +28,7 @@ def group_sum(start, nums, target):
     """
     if start >= len(nums):
         return target == 0
-    
+
     # next simplest case is when len = 1 and target is = 1
     # make decision
     target -= nums[start]
@@ -36,7 +36,7 @@ def group_sum(start, nums, target):
     # recursive call
     if group_sum(start + 1, nums, target):
         return True
-    
+
     # undo the decision if not true
     target += nums[start]
 
@@ -44,7 +44,7 @@ def group_sum(start, nums, target):
     return group_sum(start + 1, nums, target)
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+
 def group_sum_6(start, nums, target):
     """
     Given a list of ints, determine if there exists a group of some ints that sum to the
@@ -54,6 +54,27 @@ def group_sum_6(start, nums, target):
     pre: start >= 0, len(nums) >= 0, target >= 0, nums will only contain ints
     post: return True if nums has a group of ints that sum to target, False otherwise
     """
+    # simplest case
+    if start >= len(nums):
+        return target == 0
+
+    # next simplest case is when len = 1 and target is = 1
+    # make decision
+    target -= nums[start]
+
+    # Forcing the inclusion of every instance of the number 6
+    if nums[start] == 6:
+        return group_sum_6(start + 1, nums, target)
+
+    # recursive call
+    if group_sum_6(start + 1, nums, target):
+        return True
+
+    # undo the decision if not true
+    target += nums[start]
+
+    # Do not include the number
+    return group_sum_6(start + 1, nums, target)
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
