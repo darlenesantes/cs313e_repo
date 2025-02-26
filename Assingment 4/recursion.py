@@ -154,6 +154,31 @@ def group_sum_clump(start, nums, target):
     pre: start >= 0, len(nums) >= 0, target >= 0, nums will only contain ints
     post: return True if nums has a group of ints that sum to target, False otherwise
     """
+    # base case
+    if start >= len(nums):
+        return target == 0
+
+    # make a decision based on how many times this is included
+    repeat_count = 0
+    for i in range(start, len(nums)):
+        if nums[start] == nums[i]:
+            repeat_count += 1
+        else:
+            break
+    
+    # subtract total of all nums in the clump and then either include it or not
+    clump_total = nums[start] * repeat_count
+    target -= clump_total
+
+    # Recursively call the function
+    if group_sum_clump(start + repeat_count, nums, target):
+        return True
+    
+    # Undo the action and move on
+    target += clump_total
+
+    # do not include the clump
+    return group_sum_clump(start + repeat_count, nums, target)
 
 
 # TODO: Modify this function
