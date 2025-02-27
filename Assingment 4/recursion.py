@@ -196,6 +196,8 @@ def split_array(nums):
     start_index = 0
     return successful_split(start_index, nums, sum1, sum2)
 
+# this is the helper function for split_array
+# TODO: Write docstring
 def successful_split(start_index, nums, sum1, sum2):
     ''' Determines whether the index can be added to the lists successfully recursively
     '''
@@ -214,7 +216,7 @@ def successful_split(start_index, nums, sum1, sum2):
     return successful_split(start_index + 1, nums, sum1, sum2)
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+
 def split_odd_10(nums):
     """
     Given a list of ints, determine if the numbers can be split evenly into two groups
@@ -224,6 +226,26 @@ def split_odd_10(nums):
     pre: len(nums) >= 0, nums will only contain ints
     post: return True if nums can be split, False otherwise
     """
+    start_index = 0
+    sum1 = 0
+    sum2 = 0
+    return successful_odd_10(start_index, nums, sum1, sum2)
+
+# TODO: Write docstring
+def successful_odd_10(start_index, nums, sum1, sum2):
+    # base case is sum 1 is odd and sum 2 is multiple of 10
+    if start_index >= len(nums):
+        return sum1 % 2 == 1 and sum2 % 10 == 0
+
+    # next best is adding a number to sum1 and meets requirements
+    sum1 += nums[start_index]
+    if successful_odd_10(start_index + 1, nums, sum1, sum2):
+        return True
+    # undo if not successful and try sum2, repeat
+    sum1 -= nums[start_index]
+
+    sum2 += nums[start_index]
+    return successful_odd_10(start_index + 1, nums, sum1, sum2)
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
