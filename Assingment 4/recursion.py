@@ -142,7 +142,7 @@ def group_sum_5(start, nums, target):
     return group_sum_5(start + 1, nums, target)
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+
 def group_sum_clump(start, nums, target):
     """
     Given a list of ints, determine if there exists a group of some ints that sum to
@@ -165,7 +165,7 @@ def group_sum_clump(start, nums, target):
             repeat_count += 1
         else:
             break
-    
+
     # subtract total of all nums in the clump and then either include it or not
     clump_total = nums[start] * repeat_count
     target -= clump_total
@@ -173,7 +173,7 @@ def group_sum_clump(start, nums, target):
     # Recursively call the function
     if group_sum_clump(start + repeat_count, nums, target):
         return True
-    
+
     # Undo the action and move on
     target += clump_total
 
@@ -181,7 +181,7 @@ def group_sum_clump(start, nums, target):
     return group_sum_clump(start + repeat_count, nums, target)
 
 
-# TODO: Modify this function
+
 def split_array(nums):
     """
     Given a list of ints, determine if the numbers can be split evenly into two groups
@@ -191,6 +191,27 @@ def split_array(nums):
     pre: len(nums) >= 0, nums will only contain ints
     post: return True if nums can be split, False otherwise
     """
+    sum1 = 0
+    sum2 = 0
+    start_index = 0
+    return successful_split(start_index, nums, sum1, sum2)
+
+def successful_split(start_index, nums, sum1, sum2):
+    ''' Determines whether the index can be added to the lists successfully recursively
+    '''
+    # base case
+    if start_index >= len(nums):
+        return sum1 == sum2
+
+    # next best is adding number to sum 1 makes it == sum 2, so call function again and then undo it
+    sum1 += nums[start_index]
+    if successful_split(start_index + 1, nums, sum1, sum2):
+        return True
+    sum1 -= nums[start_index]
+
+    # next best is adding num to sum2 makes it == sum1, so call function again
+    sum2 += nums[start_index]
+    return successful_split(start_index + 1, nums, sum1, sum2)
 
 
 # TODO: Modify this function. You may delete this comment when you are done.
