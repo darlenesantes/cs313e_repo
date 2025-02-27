@@ -127,7 +127,7 @@ def group_sum_5(start, nums, target):
     # recursive call, checks if the number is a multiple of 5 and forces its inclusion
     if nums[start] == 5:
         # checks if the next number is 1 and skips it
-        if nums[start + 1] == 1:
+        if start + 1 < len(nums) and nums[start + 1] == 1:
             return group_sum_5(start + 2, nums, target)
         # continues like normal if the next value is not 1
         return group_sum_5(start + 1, nums, target)
