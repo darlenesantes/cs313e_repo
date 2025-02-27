@@ -197,9 +197,26 @@ def split_array(nums):
     return successful_split(start_index, nums, sum1, sum2)
 
 # this is the helper function for split_array
-# TODO: Write docstring
 def successful_split(start_index, nums, sum1, sum2):
-    """add docstring here"""
+    """
+    Recursively determines whether a list of integers can be split into two groups with equal sums
+
+    Parameters
+    ----------
+    start_index : int
+        The index in the list that we are trying to split into one list or another
+    nums : list
+        A list of integers to be split
+    sum1 : int
+        The sum of all ints in one subset
+    sum2 : int
+        The sum of all ints in the other subset
+
+    Returns
+    -------
+    bool
+        True if list can be split into subsets with equal sums, False otherwise
+    """
     # base case
     if start_index >= len(nums):
         return sum1 == sum2
@@ -230,9 +247,27 @@ def split_odd_10(nums):
     sum2 = 0
     return successful_odd_10(start_index, nums, sum1, sum2)
 
-# TODO: Write docstring
+
 def successful_odd_10(start_index, nums, sum1, sum2):
-    """add docstring here
+    """
+    Recursively determines whether a list of integers can be split into two groups with an odd sum 
+    and a sum that is a multiple of 10
+
+    Parameters
+    ----------
+    start_index : int
+        The index in the list that we are trying to split into one list or another
+    nums : list
+        A list of integers to be split
+    sum1 : int
+        The sum of all ints in one subset, must be odd
+    sum2 : int
+        The sum of all ints in the other subset, must be a multiple of 10
+
+    Returns
+    -------
+    bool
+        True if the list can be split into subsets meeting the conditions, False otherwise
     """
     # base case is sum 1 is odd and sum 2 is multiple of 10
     if start_index >= len(nums):
@@ -249,7 +284,7 @@ def successful_odd_10(start_index, nums, sum1, sum2):
     return successful_odd_10(start_index + 1, nums, sum1, sum2)
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
+
 def split_53(nums):
     """
     Given a list of ints, determine if the numbers can be split evenly into two groups
@@ -269,7 +304,25 @@ def split_53(nums):
 
 
 def successful_53(nums, start_index, sum1, sum2):
-    """ add docstrig here
+    """ 
+    Recursively determines whether a list of integers can be split into two groups with all 
+    multiples of 5 in one subset and all multiples of 3 in another. Sums must be equal
+
+    Parameters
+    ----------
+    start_index : int
+        The index in the list that we are trying to split into one list or another
+    nums : list
+        A list of integers to be split
+    sum1 : int
+        Sum of one subset, which contains all multiples of 5
+    sum2 : int
+        Sum of one subset, which contains all multiples of 3 but not 5
+
+    Returns
+    -------
+    bool
+        True if list can be split into subsets with equal sums, False otherwise
     """
     # Base Case: both are equal, will handle multiples later
     if start_index >= len(nums):
