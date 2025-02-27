@@ -199,8 +199,7 @@ def split_array(nums):
 # this is the helper function for split_array
 # TODO: Write docstring
 def successful_split(start_index, nums, sum1, sum2):
-    ''' Determines whether the index can be added to the lists successfully recursively
-    '''
+    """add docstring here"""
     # base case
     if start_index >= len(nums):
         return sum1 == sum2
@@ -233,6 +232,8 @@ def split_odd_10(nums):
 
 # TODO: Write docstring
 def successful_odd_10(start_index, nums, sum1, sum2):
+    """add docstring here
+    """
     # base case is sum 1 is odd and sum 2 is multiple of 10
     if start_index >= len(nums):
         return sum1 % 2 == 1 and sum2 % 10 == 0
@@ -260,3 +261,36 @@ def split_53(nums):
     pre: len(nums) >= 0, nums will only contain ints
     post: return True if nums can be split, False otherwise
     """
+    start_index = 0
+    sum1 = 0 # hold all multiples of 5
+    sum2 = 0 # hold all multiple of 3
+
+    return successful_53(nums, start_index, sum1, sum2)
+
+
+def successful_53(nums, start_index, sum1, sum2):
+    """ add docstrig here
+    """
+    # Base Case: both are equal, will handle multiples later
+    if start_index >= len(nums):
+        return sum1 == sum2
+
+    # Next best case, multiple of 5 makes everything work out
+    if nums[start_index] % 5 == 0:
+        sum1 += nums[start_index]
+        return successful_53(nums, start_index + 1, sum1, sum2)
+
+    # Next next best, multiple of 3 makes everything work out
+    if nums[start_index] % 3 == 0:
+        sum2 += nums[start_index]
+        return successful_53(nums, start_index + 1, sum1, sum2)
+
+    # Next next next, all other nums start by trying to add to sum1
+    sum1 += nums[start_index]
+    if successful_split(start_index + 1, nums, sum1, sum2):
+        return True
+    sum1 -= nums[start_index]
+
+    # next best is adding num to sum2 makes it == sum1, so call function again
+    sum2 += nums[start_index]
+    return successful_split(start_index + 1, nums, sum1, sum2)
