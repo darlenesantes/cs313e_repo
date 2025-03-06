@@ -145,11 +145,24 @@ class Employee(ABC):
                 f"Happiness: {self.happiness}%\n\tPerformance: {self.performance}%"
 
 
-# TODO: implement this class. You may delete this comment when you are done.
 class Manager(Employee):
     """
     A subclass of Employee representing a manager.
     """
+    def work(self):
+        """
+        Intended to simulate 1 hour of work
+        """
+        adjustment = random.randint(-5, 5)
+        self.performance += adjustment
+
+        if adjustment <= 0:
+            for person in self.relationships:
+                self.relationships[person] -= 1
+            self.happiness -= 1
+        else:
+            self.happiness += 1
+
 
 
 # TODO: implement this class. You may delete this comment when you are done.
