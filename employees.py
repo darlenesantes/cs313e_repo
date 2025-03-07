@@ -187,8 +187,8 @@ class TemporaryEmployee(Employee):
         """
         super().interact(other)
         if self.manager == other:
-            if other.happiness > HAPPINESS_THRESHOLD or \
-                self.performance == TEMP_EMPLOYEE_PERFORMANCE_THRESHOLD:
+            if other.happiness > HAPPINESS_THRESHOLD and \
+                self.performance >= TEMP_EMPLOYEE_PERFORMANCE_THRESHOLD:
                 self.savings += MANAGER_BONUS
             elif other.happiness <= HAPPINESS_THRESHOLD:
                 self.salary //= 2
