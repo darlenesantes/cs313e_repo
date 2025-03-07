@@ -165,7 +165,6 @@ class Manager(Employee):
 
 
 
-# TODO: implement this class. You may delete this comment when you are done.
 class TemporaryEmployee(Employee):
     """
     A subclass of Employee representing a temporary employee.
@@ -196,8 +195,29 @@ class TemporaryEmployee(Employee):
             self.is_employed = False
 
 
-# TODO: implement this class. You may delete this comment when you are done.
 class PermanentEmployee(Employee):
     """
     A subclass of Employee representing a permanent employee.
     """
+    def work(self):
+        """
+        Simulates 1 hour of work for a permanent employee
+        """
+        adjustment = random.randint(-10, 10)
+        self.performance += adjustment
+
+        if adjustment >= 0:
+            self.happiness += 1
+
+    def interact(self, other):
+        """
+        Simulates an interaction between a permanent employee and another employee
+        """
+        super().interact(other)
+
+        if self.manager == other:
+            if other.happiness > HAPPINESS_THRESHOLD and \
+                self.performance > PERM_EMPLOYEE_PERFORMANCE_THRESHOLD:
+                self.savings += MANAGER_BONUS
+            elif other.happiness < HAPPINESS_THRESHOLD:
+                self.happiness -= 1
