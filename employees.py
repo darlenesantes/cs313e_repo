@@ -131,17 +131,17 @@ class Employee(ABC):
             self.relationships[other.name] += 1
         else:
             self.relationships[other.name] -= 1
-            self._happiness -= 1
+            self.happiness -= 1
 
     def daily_expense(self):
         """
         Simulates the employee's daily expenses
         """
-        self._happiness -= 1
+        self.happiness -= 1
         self.savings -= DAILY_EXPENSE
 
     def __str__(self):
-        return f"{self.name}\n\tSalary: ${self.salary}\n\tSavings: ${self.savings}\n\t" \
+        return f"{self.name}\n\tSalary: ${self._salary}\n\tSavings: ${self.savings}\n\t" \
                 f"Happiness: {self.happiness}%\n\tPerformance: {self.performance}%"
 
 
@@ -170,6 +170,30 @@ class TemporaryEmployee(Employee):
     """
     A subclass of Employee representing a temporary employee.
     """
+    def work(self):
+        """
+        Intended to simulate 1 hour of work
+        """
+        adjustment = random.randint(-15, 15)
+        self.performance += adjustment
+        if adjustment <= 0:
+            self.happiness -= 2
+        else:
+            self.happiness += 1
+
+    def interact(self, other):
+        """
+        Simulates an interaction between a temp employee and another employee
+        """
+        super().interact(other)
+        if self.manager == other:
+            if other.happiness > HAPPINESS_THRESHOLD or \
+                self.performance == TEMP_EMPLOYEE_PERFORMANCE_THRESHOLD:
+                self.savings += MANAGER_BONUS
+            elif other.happiness <= HAPPINESS_THRESHOLD:
+                self.salary //= 2
+        if self.salary <= 0:
+            self.is_employed = False
 
 
 # TODO: implement this class. You may delete this comment when you are done.
