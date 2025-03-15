@@ -86,6 +86,19 @@ class Keyboard:
 
         post: None
         """
+        # Looping through each color and letter
+        for i, char in enumerate(guessed_word):
+            color = feedback_colors[i]
+
+            # Making sure that color is updated appropriately
+            if color == CORRECT_COLOR:
+                self.colors[char] = color
+            # Changes to wrong_spot_color only if the color is NOT correct_color
+            elif color == WRONG_SPOT_COLOR and self.colors[char] != CORRECT_COLOR:
+                self.colors[char] = color
+            # Changes to not in word color if the letter is not in the word
+            elif color == NOT_IN_WORD_COLOR and self.colors[char] == NO_COLOR:
+                self.colors[char] = color
 
     # TODO: Modify this method. You may delete this comment when you are done.
     def __str__(self):
