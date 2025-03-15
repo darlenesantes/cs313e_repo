@@ -174,7 +174,8 @@ class WordFamily:
         self.feedback_colors = feedback_colors
         self.words = words
         self.difficulty = 0
-        # TODO: implement the difficulty calculation here.
+        for color in feedback_colors:
+            self.difficulty += self.COLOR_DIFFICULTY[color]
 
     # TODO: Modify this method. You may delete this comment when you are done.
     def __lt__(self, other):
