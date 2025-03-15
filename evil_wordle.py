@@ -67,7 +67,6 @@ class Keyboard:
         self.rows = ("qwertyuiop", "asdfghjkl", "zxcvbnm")
         self.colors = {letter: NO_COLOR for letter in "qwertyuiopasdfghjklzxcvbnm"}
 
-    # TODO: Modify this method. You may delete this comment when you are done.
     def update(self, feedback_colors, guessed_word):
         """
         Updates the color of each letter on the keyboard based on feedback from a guessed word.
@@ -100,7 +99,6 @@ class Keyboard:
             elif color == NOT_IN_WORD_COLOR and self.colors[char] == NO_COLOR:
                 self.colors[char] = color
 
-    # TODO: Modify this method. You may delete this comment when you are done.
     def __str__(self):
         """
         Returns a string representation of the keyboard, showing each letter in its
@@ -122,8 +120,27 @@ class Keyboard:
         post: Returns a formatted string with each letter colored according to feedback
               and arranged to match a typical keyboard layout.
         """
-        return ""
+        final_string = ""
 
+        # Looping through each row
+        for i, row in enumerate(self.rows):
+            # Adding leading spaces
+            if i == 1:
+                final_string += " "
+            elif i == 2:
+                final_string += "   "
+
+            # Coloring each letter
+            for letter in row:
+                final_string += color_word(self.colors[letter], letter)
+
+                # Adding trailing spaces and new lines
+                if letter not in ('p', 'l', 'm'):
+                    final_string += " "
+                elif letter in ('p', 'l'):
+                    final_string += "\n"
+
+        return final_string
 
 class WordFamily:
     """
