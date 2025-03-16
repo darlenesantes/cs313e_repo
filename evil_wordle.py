@@ -159,7 +159,6 @@ class WordFamily:
 
     COLOR_DIFFICULTY = {CORRECT_COLOR: 0, WRONG_SPOT_COLOR: 1, NOT_IN_WORD_COLOR: 2}
 
-    # TODO: Modify this method. You may delete this comment when you are done.
     def __init__(self, feedback_colors, words):
         """
         Initializes the WordFamily based on the feedback colors list. The
@@ -177,7 +176,6 @@ class WordFamily:
         for color in feedback_colors:
             self.difficulty += self.COLOR_DIFFICULTY[color]
 
-    # TODO: Modify this method. You may delete this comment when you are done.
     def __lt__(self, other):
         """
         Compares this WordFamily object with another by prioritizing a larger
@@ -324,7 +322,6 @@ def prepare_game():
     return attempts, valid_words
 
 
-# TODO: Modify this function. You may delete this comment when you are done.
 def fast_sort(lst):
     """
     Returns a new list with the same elements as lst sorted in ascending order. You MUST implement
@@ -336,7 +333,43 @@ def fast_sort(lst):
     post: Returns a new list that is sorted based on the items in lst.
 
     """
-    return lst[:]
+    if len(lst) > 1:
+        middle = len(lst) // 2
+        left = lst[:middle]
+        right = lst[middle:]
+
+        # sorting both sides:
+        fast_sort(left)
+        fast_sort(right)
+
+        # merging both sides where i is left indexes, j is right indexes, and k is current
+        i = 0
+        j = 0
+        k = 0
+
+        while i < len(left) and right < len(right):
+        # When the left element at index i < right element at index j
+        # Make element at index k = element at left[i]
+            if left[i] < right[j]:
+                lst[k] = left[i]
+                i += 1
+            # When the right element at index j < left element at index i
+            else:
+                lst[k] = right[j]
+                j += 1
+            k += 1
+        # When one list is done, add the remaining elements in the other list to lst
+        while i < len(left):
+            lst[k] = left[i]
+            i += 1
+            k += 1
+
+        while j < len(right):
+            lst[k] = right[i]
+            j += 1
+            k += 1
+
+    return lst
 
 
 # TODO: Modify this helper function. You may delete this comment when you are done.
