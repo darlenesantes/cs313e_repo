@@ -190,7 +190,11 @@ class WordFamily:
             raises NotImplementedError with the message: "< operator only valid
             for WordFamily comparisons." if `other` is not a WordFamily instance.
         """
-        return False
+        if not isinstance(other, WordFamily):
+            raise NotImplementedError('< operator only valid for WordFamily comparisons.')
+
+        return (-len(self.words), -self.difficulty, self.feedback_colors) < \
+            (-len(other.words), -other.difficulty, other.feedback_colors)
 
     # DO NOT change this method.
     # You should use this for debugging!
