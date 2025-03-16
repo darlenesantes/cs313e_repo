@@ -372,7 +372,7 @@ def fast_sort(lst):
     return lst
 
 
-# TODO: Modify this helper function. You may delete this comment when you are done.
+# Code adapted from my Assignment 2: "wordle.py" assignment (Darlene Santes, CS313E, Spring 2025)
 def get_feedback_colors(secret_word, guessed_word):
     """
     Processes the guess and generates the colored feedback based on the potential secret word. This
@@ -391,9 +391,29 @@ def get_feedback_colors(secret_word, guessed_word):
     """
     feedback = [None] * NUM_LETTERS
 
-    # Modify this! This is just starter code.
-    for i in range(NUM_LETTERS):
-        feedback[i] = WRONG_SPOT_COLOR
+    # Creating a frequency dictionary
+    frequency = {}
+    for char in secret_word:
+        if char not in frequency:
+            frequency[char] = 1
+        else:
+            frequency[char] += 1
+
+    # Iterating through guessed_word
+    for i, char in enumerate(guessed_word):
+        # letter is in the word in the correct spot
+        if char == secret_word[i]:
+            feedback[i] = CORRECT_COLOR
+            frequency[char] -= 1
+
+    for i, char in enumerate(guessed_word):
+        # letter is in the word in the wrong spot
+        if feedback[i] is None:
+            if char in secret_word and frequency[char] > 0:
+                feedback[i] = WRONG_SPOT_COLOR
+                frequency[char] -= 1
+            else:
+                feedback[i] = NOT_IN_WORD_COLOR
 
     # You do not have to change this return statement
     return feedback
