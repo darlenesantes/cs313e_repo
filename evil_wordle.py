@@ -347,7 +347,7 @@ def fast_sort(lst):
         j = 0
         k = 0
 
-        while i < len(left) and right < len(right):
+        while i < len(left) and j < len(right):
         # When the left element at index i < right element at index j
         # Make element at index k = element at left[i]
             if left[i] < right[j]:
@@ -365,7 +365,7 @@ def fast_sort(lst):
             k += 1
 
         while j < len(right):
-            lst[k] = right[i]
+            lst[k] = right[j]
             j += 1
             k += 1
 
@@ -439,10 +439,29 @@ def get_feedback(remaining_secret_words, guessed_word):
             2. Difficulty of the feedback
             3. Lexicographical ordering of the feedback (ASCII value comparisons)
     """
-    # Modify this! This is just starter code.
-    feedback_colors = get_feedback_colors(remaining_secret_words[0], guessed_word)
+    # Creating a dictionary that has different patters and words in it
+    patterns = {}
+    for word in remaining_secret_words:
+        feedback = tuple(get_feedback_colors(word, guessed_word))
+        if feedback not in patterns:
+            patterns[feedback] = [word]
+        else:
+            patterns[feedback].append(word)
 
-    return feedback_colors, remaining_secret_words
+    # Creating a list of each word family
+    families = []
+    for family, words in patterns.items():
+        families.append(WordFamily(family, words))
+
+    # Sorting and finding the most difficult word family
+    fast_sort(families)
+    feedback_colors = families[0].feedback_colors
+    new_remaining_secret_words = families[0].words
+
+
+    # feedback_colors = get_feedback_colors(remaining_secret_words[0], guessed_word)
+
+    return feedback_colors, new_remaining_secret_words
 
 
 # DO NOT modify this function.
