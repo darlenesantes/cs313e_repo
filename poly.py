@@ -188,18 +188,43 @@ class LinkedList:
 
     # Return a string representation of the polynomial.
     def __str__(self):
-        pass
+        terms = []
+        curr_node = self.dummy.next
+
+        while curr_node is not None:
+            coeff, exp = curr_node.coeff, curr_node.exp
+            term = str((coeff, exp))
+            terms.append(term)
+            curr_node = curr_node.next
+
+        return " + ".join(terms)
 
 
 def main():
+    """
+    Reading data from files, mkaing polynomials, then adding and multiplying them
+    """
     # read data from stdin (terminal/file) using input() and create polynomial p
+    p_poly_terms = int(input().strip())
+    p = LinkedList()
+    for _ in range(p_poly_terms):
+        term = input().strip().split()
+        p.insert_term(int(term[0]), int(term[1]))
 
+    input()
     # read data from stdin (terminal/file) using input() and create polynomial q
+    q_poly_terms =  int(input().strip())
+    q = LinkedList()
+    for _ in range(q_poly_terms):
+        term = input().strip().split()
+        q.insert_term(int(term[0]), int(term[1]))
 
     # get sum of p and q as a new linked list and print sum
-
+    new_list = p.add(q)
+    print(new_list)
     # get product of p and q as a new linked list and print product
-    pass
+    mult_list = p.mult(q)
+    print(mult_list)
 
 
 if __name__ == "__main__":
