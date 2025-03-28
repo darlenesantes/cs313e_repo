@@ -124,7 +124,7 @@ class LinkedList:
         prev_node = self.dummy
         curr_node = self.dummy.next
 
-        while curr_node:
+        while curr_node is not None:
             # if coef is the greatest, we stop the loop b/c we know where to insert it now
             if curr_node.exp < exp:
                 break
@@ -135,18 +135,46 @@ class LinkedList:
                 if curr_node.coeff == 0:
                     prev_node.next = curr_node.next
                 return
+
             prev_node = curr_node
             curr_node = curr_node.next
 
         new_term.next = curr_node
         prev_node.next = new_term
 
+    # Helper function!
+    def poly_size(self):
+        """
+        Returns the size of the linked list
+        """
+        size = 0
+        curr = self.dummy.next
+
+        while curr is not None:
+            size += 1
+            curr = curr.next
+
+        return size
+
     # Add a polynomial p to the polynomial and return the resulting polynomial as a new linked list.
     def add(self, p):
-        # to add polynomials together we need to iterate through p
+        """
+        Adding a polynomial p to the polynomial and returning the resulting polynomial
+        """
+        # Creating new Linked List
         new_linked = LinkedList()
-        
-        #
+        curr_node = self.dummy.next
+        p_curr_node = p.dummy.next
+
+        # Iterating through both lists and inserting them into new list
+        while curr_node is not None:
+            new_linked.insert_term(curr_node.coeff, curr_node.exp)
+            curr_node = curr_node.next
+
+        while p_curr_node is not None:
+            new_linked.insert_term(p_curr_node.coeff, p_curr_node.exp)
+            p_curr_node = p_curr_node.next
+
         return new_linked
 
     # Multiply a polynomial p with the polynomial and return the product as a new linked list.
